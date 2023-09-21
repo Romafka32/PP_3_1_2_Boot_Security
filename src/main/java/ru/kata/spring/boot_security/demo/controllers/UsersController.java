@@ -21,8 +21,8 @@ public class UsersController {
     @GetMapping
     public String getUser(ModelMap model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-        User user = userService.findByEmail(email);
+        User userFromAuth = (User) authentication.getPrincipal();
+        User user = userService.findById(userFromAuth.getId());
         model.addAttribute("user",user);
         return "details";
     }
